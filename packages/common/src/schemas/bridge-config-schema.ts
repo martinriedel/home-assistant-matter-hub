@@ -43,10 +43,9 @@ const featureFlagSchema: JSONSchema7 = {
   title: "Feature Flags",
   type: "object",
   properties: {
-    coverDoNotInvertPercentage: {
-      title: "Do not invert Percentages for Covers",
-      description:
-        "Do not invert the percentage of covers to match Home Assistant (not Matter compliant)",
+    coverSwapOpenClose: {
+      title: "Swap open / close",
+      description: "Swap open / close.",
       type: "boolean",
       default: false,
     },

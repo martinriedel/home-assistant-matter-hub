@@ -20,8 +20,12 @@ const adjustPosition = (position: number, agent: Agent) => {
     return null;
   }
   let percentValue = position;
-  if (featureFlags.coverDoNotInvertPercentage !== true) {
-    percentValue = 100 - percentValue;
+  if (featureFlags.coverSwapOpenClose === true) {
+    if (percentValue === 0) {
+      percentValue = 100;
+    } else if (percentValue === 100) {
+      percentValue = 0;
+    }
   }
   return percentValue;
 };
@@ -35,8 +39,8 @@ const config: WindowCoveringConfig = {
         coverState === CoverDeviceState.closed
           ? 100
           : coverState === CoverDeviceState.open
-            ? 0
-            : undefined;
+          ? 0
+          : undefined;
     }
     return position == null ? null : adjustPosition(position, agent);
   },
@@ -48,8 +52,8 @@ const config: WindowCoveringConfig = {
         coverState === CoverDeviceState.closed
           ? 100
           : coverState === CoverDeviceState.open
-            ? 0
-            : undefined;
+          ? 0
+          : undefined;
     }
     return position == null ? null : adjustPosition(position, agent);
   },
@@ -58,8 +62,8 @@ const config: WindowCoveringConfig = {
     return coverState === CoverDeviceState.opening
       ? WindowCovering.MovementStatus.Opening
       : coverState === CoverDeviceState.closing
-        ? WindowCovering.MovementStatus.Closing
-        : WindowCovering.MovementStatus.Stopped;
+      ? WindowCovering.MovementStatus.Closing
+      : WindowCovering.MovementStatus.Stopped;
   },
 
   stopCover: () => ({ action: "cover.stop_cover" }),
